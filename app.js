@@ -1,14 +1,22 @@
+console.log("running wrapper server on port 3000");
+
 // 3rd party
 var express = require('express');
 var hbs = require('hbs');
 
 var app = express();
 
+app.use(require('less-middleware')({ src: __dirname + '/public' }));
+app.use(express.static(__dirname + '/public'));
+app.use(express.bodyParser());
+app.use(express.methodOverride());
+app.use(app.router);
+
 // set the view engine to use handlebars
 app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
 
-app.use(express.static(__dirname + '/public'));
+
 
 var blocks = {};
 
